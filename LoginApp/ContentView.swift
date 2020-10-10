@@ -223,6 +223,7 @@ struct Product: View {
     let data: DataModel
     //    @Binding var jumlahProduct: Int
     @ObservedObject var jumlahkeranjang: GlobalObject
+    @State var isTapped = false
     
     var body: some View {
         VStack(alignment: .leading){
@@ -234,10 +235,36 @@ struct Product: View {
                     .frame(height: 200)
                     .clipped()
                 
-                Button(action: {print("Berhasil tambah ke wishlist")}){
+                if (!self.isTapped){
                     Image(systemName: "heart")
+                        .resizable()
+                        .frame(width: 20, height: 20)
                         .padding()
                         .foregroundColor(.red)
+                        .onTapGesture {
+                            if (!self.isTapped){
+                                self.isTapped = true
+                                print("Berhasil ditambah ke wishlist")
+                            } else {
+                                self.isTapped = false
+                                print("Berhasil menghapus wishlist")
+                            }
+                        }
+                } else {
+                    Image(systemName: "heart.fill")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .padding()
+                        .foregroundColor(.red)
+                        .onTapGesture {
+                            if (!self.isTapped){
+                                self.isTapped = true
+                                print("Berhasil ditambah ke wishlist")
+                            } else {
+                                self.isTapped = false
+                                print("Berhasil menghapus wishlist")
+                            }
+                        }
                 }
             }
             Text(self.data.productName)
